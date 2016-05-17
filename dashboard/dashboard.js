@@ -1586,6 +1586,10 @@ var dashboard = ({
 
         this['step'] = 5;
 
+        document.body.oncontextmenu = function() {
+            return false;
+        }
+
         this.ajaxRequest(dataPath, function(data) {
 
             dashboard['data'] = data;
