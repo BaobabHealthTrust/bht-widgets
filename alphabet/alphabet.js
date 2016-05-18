@@ -573,6 +573,10 @@ var alphabet = ({
 
     init: function (target, offset, showEmpty, conceptsPath, articlesPath) {
 
+        document.body.oncontextmenu = function() {
+            return false;
+        }
+
         alphabet['__conceptsPath__'] = (conceptsPath ? conceptsPath : "data/concepts.json");
 
         alphabet['__articlesPath__'] = (articlesPath ? articlesPath : "data/articles.json");
