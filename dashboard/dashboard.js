@@ -1183,7 +1183,7 @@ var dashboard = ({
                         li.setAttribute("patientProgram", patientPrograms[i]);
                         li.setAttribute("visit", visits[j]);
 
-                        if (j >= step) {
+                        if (j >= dashboard.step) {
 
                             li.className = "hidden";
 
@@ -1217,15 +1217,15 @@ var dashboard = ({
 
                         li.onclick = function () {
 
-                            if (selectedVisit) {
+                            if (dashboard.selectedVisit) {
 
-                                if (dashboard.__$(selectedVisit)) {
+                                if (dashboard.__$(dashboard.selectedVisit)) {
 
-                                    dashboard.__$(selectedVisit).removeAttribute("selected");
+                                    dashboard.__$(dashboard.selectedVisit).removeAttribute("selected");
 
-                                    dashboard.__$(selectedVisit).style.backgroundColor = "";
+                                    dashboard.__$(dashboard.selectedVisit).style.backgroundColor = "";
 
-                                    dashboard.__$(selectedVisit).style.color = "#000";
+                                    dashboard.__$(dashboard.selectedVisit).style.color = "#000";
 
                                 }
 
@@ -1237,9 +1237,9 @@ var dashboard = ({
 
                             this.style.color = "#fff";
 
-                            selectedVisit = this.id;
+                            dashboard.selectedVisit = this.id;
 
-                            dashboard.loadVisit(this, data);
+                            dashboard.loadVisit(this, dashboard.data);
 
                         }
 
@@ -1247,7 +1247,7 @@ var dashboard = ({
 
                     }
 
-                    if (j >= step) {
+                    if (j >= dashboard.step) {
 
                         var btnMore = document.createElement("li");
                         btnMore.id = "btnMore";
@@ -1261,7 +1261,7 @@ var dashboard = ({
                         btnMore.style.marginBottom = "5px";
                         btnMore.style.borderBottom = "1px solid #ccc";
                         btnMore.style.textAlign = "center";
-                        btnMore.setAttribute("currentLimit", step);
+                        btnMore.setAttribute("currentLimit", dashboard.step);
 
                         btnMore.onmouseover = function () {
 
@@ -1311,7 +1311,7 @@ var dashboard = ({
 
         if (active < total) {
 
-            for (var i = limit; i < limit + step; i++) {
+            for (var i = limit; i < limit + dashboard.step; i++) {
 
                 if (dashboard.__$("visit" + i)) {
 
@@ -1323,7 +1323,7 @@ var dashboard = ({
 
             }
 
-            limit += step;
+            limit += dashboard.step;
 
             if (limit >= total) {
 
