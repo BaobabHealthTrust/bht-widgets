@@ -37,7 +37,182 @@ var concept = ({
         return [w, h, t, l];
     },
 
+    sheet: function () {
+        // Create the <style> tag
+        var style = document.createElement("style");
+
+        style.appendChild(document.createTextNode(""));
+
+        // Add the <style> element to the page
+        document.head.appendChild(style);
+
+        return style.sheet;
+    },
+
+    addCSSRule: function (sheet, selector, rules, index) {
+
+        if ("insertRule" in sheet) {
+            sheet.insertRule(selector + "{" + rules + "}", index);
+        }
+        else if ("addRule" in sheet) {
+            sheet.addRule(selector, rules, index);
+        }
+
+    },
+
     createIcon: function () {
+
+        var style = this.sheet();
+        this.addCSSRule(style, "body", "padding: 0px !important");
+        this.addCSSRule(style, "body", "overflow: hidden");
+        this.addCSSRule(style, "body", "margin: 0px");
+        this.addCSSRule(style, ".headTab", "width: 100%");
+        this.addCSSRule(style, ".headTab", "box-shadow: 5px 2px 5px 0px rgba(0,0,0,0.75)");
+        this.addCSSRule(style, ".headTab", "overflow: hidden");
+        this.addCSSRule(style, ".headTab", "height: 120px");
+        this.addCSSRule(style, ".headTab", "border: 1px solid #004586");
+        this.addCSSRule(style, ".blueText", "color: #3c60b1");
+
+        this.addCSSRule(style, "button", "font-size: 22px !important");
+        this.addCSSRule(style, "button", "padding: 15px;");
+        this.addCSSRule(style, "button", "min-width: 120px");
+        this.addCSSRule(style, "button", "cursor: pointer");
+        this.addCSSRule(style, "button", "min-height: 55px");
+        this.addCSSRule(style, "button", "border-radius: 5px !important");
+        this.addCSSRule(style, "button", "margin: 3px");
+
+        this.addCSSRule(style, "button:active", "background-color: #ffc579 !important");
+        this.addCSSRule(style, "button:active", "background-image: -webkit-gradient(linear, left top, left bottom, from(#ffc579), to(#fb9d23)) !important");
+        this.addCSSRule(style, "button:active", "background-image: -webkit-linear-gradient(top, #ffc579, #fb9d23) !important");
+        this.addCSSRule(style, "button:active", "background-image: -moz-linear-gradient(top, #ffc579, #fb9d23) !important");
+        this.addCSSRule(style, "button:active", "background-image: -ms-linear-gradient(top, #ffc579, #fb9d23) !important");
+        this.addCSSRule(style, "button:active", "background-image: -o-linear-gradient(top, #ffc579, #fb9d23) !important");
+        this.addCSSRule(style, "button:active", "background-image: linear-gradient(to bottom, #ffc579, #fb9d23)");
+        this.addCSSRule(style, "button:active", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffc579, endColorstr=#fb9d23) !important");
+
+        this.addCSSRule(style, ".blue", "border: 1px solid #7eb9d0");
+        this.addCSSRule(style, ".blue", "-webkit-border-radius: 3px");
+        this.addCSSRule(style, ".blue", "-moz-border-radius: 3px");
+        this.addCSSRule(style, ".blue", "border-radius: 3px");
+        this.addCSSRule(style, ".blue", "font-size: 28px");
+        this.addCSSRule(style, ".blue", "font-family: arial, helvetica, sans-serif");
+        this.addCSSRule(style, ".blue", "padding: 10px 10px 10px 10px");
+        this.addCSSRule(style, ".blue", "text-decoration: none");
+        this.addCSSRule(style, ".blue", "display: inline-block");
+        this.addCSSRule(style, ".blue", "text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3)");
+        this.addCSSRule(style, ".blue", "font-weight: bold");
+        this.addCSSRule(style, ".blue", "color: #FFFFFF");
+        this.addCSSRule(style, ".blue", "background-color: #a7cfdf");
+        this.addCSSRule(style, ".blue", "background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a))");
+        this.addCSSRule(style, ".blue", "background-image: -webkit-linear-gradient(top, #a7cfdf, #23538a)");
+        this.addCSSRule(style, ".blue", "background-image: -moz-linear-gradient(top, #a7cfdf, #23538a)");
+        this.addCSSRule(style, ".blue", "background-image: -ms-linear-gradient(top, #a7cfdf, #23538a)");
+        this.addCSSRule(style, ".blue", "background-image: -o-linear-gradient(top, #a7cfdf, #23538a)");
+        this.addCSSRule(style, ".blue", "background-image: linear-gradient(to bottom, #a7cfdf, #23538a)");
+        this.addCSSRule(style, ".blue", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a7cfdf, endColorstr=#23538a)");
+
+        this.addCSSRule(style, ".blue:hover", "border: 1px solid #5ca6c4");
+        this.addCSSRule(style, ".blue:hover", "background-color: #82bbd1");
+        this.addCSSRule(style, ".blue:hover", "background-image: -webkit-gradient(linear, left top, left bottom, from(#82bbd1), to(#193b61))");
+        this.addCSSRule(style, ".blue:hover", "background-image: -webkit-linear-gradient(top, #82bbd1, #193b61)");
+        this.addCSSRule(style, ".blue:hover", "background-image: -moz-linear-gradient(top, #82bbd1, #193b61)");
+        this.addCSSRule(style, ".blue:hover", "background-image: -ms-linear-gradient(top, #82bbd1, #193b61)");
+        this.addCSSRule(style, ".blue:hover", "background-image: -o-linear-gradient(top, #82bbd1, #193b61)");
+        this.addCSSRule(style, ".blue:hover", "background-image: linear-gradient(to bottom, #82bbd1, #193b61)");
+        this.addCSSRule(style, ".blue:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#82bbd1, endColorstr=#193b61)");
+
+        this.addCSSRule(style, ".green", "border: 1px solid #34740e");
+        this.addCSSRule(style, ".green", "-webkit-border-radius: 3px");
+        this.addCSSRule(style, ".green", "-moz-border-radius: 3px");
+        this.addCSSRule(style, ".green", "border-radius: 3px");
+        this.addCSSRule(style, ".green", "font-size: 28px");
+        this.addCSSRule(style, ".green", "font-family: arial, helvetica, sans-serif");
+        this.addCSSRule(style, ".green", "padding: 10px 10px 10px 10px");
+        this.addCSSRule(style, ".green", "text-decoration: none");
+        this.addCSSRule(style, ".green", "display: inline-block");
+        this.addCSSRule(style, ".green", "text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3)");
+        this.addCSSRule(style, ".green", "font-weight: bold");
+        this.addCSSRule(style, ".green", "color: #FFFFFF");
+        this.addCSSRule(style, ".green", "background-color: #4ba614");
+        this.addCSSRule(style, ".green", "background-image: -webkit-gradient(linear, left top, left bottom, from(#4ba614), to(#008c00))");
+        this.addCSSRule(style, ".green", "background-image: -webkit-linear-gradient(top, #4ba614, #008c00)");
+        this.addCSSRule(style, ".green", "background-image: -moz-linear-gradient(top, #4ba614, #008c00)");
+        this.addCSSRule(style, ".green", "background-image: -ms-linear-gradient(top, #4ba614, #008c00)");
+        this.addCSSRule(style, ".green", "background-image: -o-linear-gradient(top, #4ba614, #008c00)");
+        this.addCSSRule(style, ".green", "background-image: linear-gradient(to bottom, #4ba614, #008c00)");
+        this.addCSSRule(style, ".green", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#4ba614, endColorstr=#008c00)");
+
+        this.addCSSRule(style, ".green:hover", "border: 1px solid #224b09");
+        this.addCSSRule(style, ".green:hover", "background-color: #36780f");
+        this.addCSSRule(style, ".green:hover", "background-image: -webkit-gradient(linear, left top, left bottom, from(#36780f), to(#005900))");
+        this.addCSSRule(style, ".green:hover", "background-image: -webkit-linear-gradient(top, #36780f, #005900)");
+        this.addCSSRule(style, ".green:hover", "background-image: -moz-linear-gradient(top, #36780f, #005900)");
+        this.addCSSRule(style, ".green:hover", "background-image: -ms-linear-gradient(top, #36780f, #005900)");
+        this.addCSSRule(style, ".green:hover", "background-image: -o-linear-gradient(top, #36780f, #005900)");
+        this.addCSSRule(style, ".green:hover", "background-image: linear-gradient(to bottom, #36780f, #005900)");
+        this.addCSSRule(style, ".green:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#36780f, endColorstr=#005900)");
+
+        this.addCSSRule(style, ".red", "border: 1px solid #72021c");
+        this.addCSSRule(style, ".red", "-webkit-border-radius: 3px");
+        this.addCSSRule(style, ".red", "-moz-border-radius: 3px");
+        this.addCSSRule(style, ".red", "border-radius: 3px");
+        this.addCSSRule(style, ".red", "font-size: 28px");
+        this.addCSSRule(style, ".red", "font-family: arial, helvetica, sans-serif");
+        this.addCSSRule(style, ".red", "padding: 10px 10px 10px 10px");
+        this.addCSSRule(style, ".red", "text-decoration: none");
+        this.addCSSRule(style, ".red", "display: inline-block");
+        this.addCSSRule(style, ".red", "text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3)");
+        this.addCSSRule(style, ".red", "font-weight: bold");
+        this.addCSSRule(style, ".red", "color: #FFFFFF");
+        this.addCSSRule(style, ".red", "background-color: #a90329");
+        this.addCSSRule(style, ".red", "background-image: -webkit-gradient(linear, left top, left bottom, from(#a90329), to(#6d0019))");
+        this.addCSSRule(style, ".red", "background-image: -webkit-linear-gradient(top, #a90329, #6d0019)");
+        this.addCSSRule(style, ".red", "background-image: -moz-linear-gradient(top, #a90329, #6d0019)");
+        this.addCSSRule(style, ".red", "background-image: -ms-linear-gradient(top, #a90329, #6d0019)");
+        this.addCSSRule(style, ".red", "background-image: -o-linear-gradient(top, #a90329, #6d0019)");
+        this.addCSSRule(style, ".red", "background-image: linear-gradient(to bottom, #a90329, #6d0019)");
+        this.addCSSRule(style, ".red", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#a90329, endColorstr=#6d0019)");
+
+        this.addCSSRule(style, ".red:hover", "border: 1px solid #450111");
+        this.addCSSRule(style, ".red:hover", "background-color: #77021d");
+        this.addCSSRule(style, ".red:hover", "background-image: -webkit-gradient(linear, left top, left bottom, from(#77021d), to(#3a000d))");
+        this.addCSSRule(style, ".red:hover", "background-image: -webkit-linear-gradient(top, #77021d, #3a000d)");
+        this.addCSSRule(style, ".red:hover", "background-image: -moz-linear-gradient(top, #77021d, #3a000d)");
+        this.addCSSRule(style, ".red:hover", "background-image: -ms-linear-gradient(top, #77021d, #3a000d)");
+        this.addCSSRule(style, ".red:hover", "background-image: -o-linear-gradient(top, #77021d, #3a000d)");
+        this.addCSSRule(style, ".red:hover", "background-image: linear-gradient(to bottom, #77021d, #3a000d)");
+        this.addCSSRule(style, ".red:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#77021d, endColorstr=#3a000d)");
+
+        this.addCSSRule(style, ".gray", "border: 1px solid #ccc");
+        this.addCSSRule(style, ".gray", "-webkit-border-radius: 3px");
+        this.addCSSRule(style, ".gray", "-moz-border-radius: 3px");
+        this.addCSSRule(style, ".gray", "border-radius: 3px");
+        this.addCSSRule(style, ".gray", "font-size: 28px");
+        this.addCSSRule(style, ".gray", "font-family: arial, helvetica, sans-serif");
+        this.addCSSRule(style, ".gray", "padding: 10px 10px 10px 10px");
+        this.addCSSRule(style, ".gray", "text-decoration: none");
+        this.addCSSRule(style, ".gray", "display: inline-block");
+        this.addCSSRule(style, ".gray", "text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3)");
+        this.addCSSRule(style, ".gray", "font-weight: bold");
+        this.addCSSRule(style, ".gray", "color: #FFFFFF");
+        this.addCSSRule(style, ".gray", "background-color: #ccc");
+        this.addCSSRule(style, ".gray", "background-image: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999))");
+        this.addCSSRule(style, ".gray", "background-image: -webkit-linear-gradient(top, #ccc, #999)");
+        this.addCSSRule(style, ".gray", "background-image: -moz-linear-gradient(top, #ccc, #999)");
+        this.addCSSRule(style, ".gray", "background-image: -ms-linear-gradient(top, #ccc, #999)");
+        this.addCSSRule(style, ".gray", "background-image: -o-linear-gradient(top, #ccc, #999)");
+        this.addCSSRule(style, ".gray", "background-image: linear-gradient(to bottom, #ccc, #999)");
+        this.addCSSRule(style, ".gray", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ccc, endColorstr=#999)");
+
+        this.addCSSRule(style, ".gray:hover", "border: 1px solid #ccc");
+        this.addCSSRule(style, ".gray:hover", "background-color: #ddd");
+        this.addCSSRule(style, ".gray:hover", "background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#ccc))");
+        this.addCSSRule(style, ".gray:hover", "background-image: -webkit-linear-gradient(top, #333, #ccc)");
+        this.addCSSRule(style, ".gray:hover", "background-image: -moz-linear-gradient(top, #333, #ccc)");
+        this.addCSSRule(style, ".gray:hover", "background-image: -ms-linear-gradient(top, #333, #ccc)");
+        this.addCSSRule(style, ".gray:hover", "background-image: -o-linear-gradient(top, #333, #ccc)");
+        this.addCSSRule(style, ".gray:hover", "background-image: linear-gradient(to bottom, #333, #ccc)");
+        this.addCSSRule(style, ".gray:hover", "filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#333, endColorstr=#ccc)");
 
         var icon = document.createElement("img");
         icon.setAttribute("src", concept['icoWiki']);
@@ -287,6 +462,7 @@ var concept = ({
         var navTbl = document.createElement("table");
         navTbl.style.borderCollapse = "collapse";
         navTbl.style.margin = "auto";
+        navTbl.style.marginTop = "-2px";
 
         cell3_0.appendChild(navTbl);
 
@@ -302,15 +478,15 @@ var concept = ({
         var conceptBtnFirst = document.createElement("button");
         conceptBtnFirst.id = "concept.btnFirst";
         conceptBtnFirst.style.width = "30px";
-        conceptBtnFirst.className = "blue";
+        conceptBtnFirst.className = "gray";
         conceptBtnFirst.innerHTML = "|<";
-        conceptBtnFirst.style.padding = "8px";
         conceptBtnFirst.style.marginTop = "-6px";
-        conceptBtnFirst.style.minWidth = "50px";
+        conceptBtnFirst.style.minWidth = "80px";
         conceptBtnFirst.style.marginRight = "20px";
         conceptBtnFirst.style.marginLeft = "20px";
         conceptBtnFirst.style.fontWeight = "bold";
         conceptBtnFirst.style.cursor = "pointer";
+        conceptBtnFirst.style.minHeight = "30px";
         conceptBtnFirst.setAttribute("disabled", true);
 
         conceptBtnFirst.onclick = function() {
@@ -324,14 +500,14 @@ var concept = ({
         var conceptBtnPrevious = document.createElement("button");
         conceptBtnPrevious.id = "concept.btnPrevious";
         conceptBtnPrevious.style.width = "30px";
-        conceptBtnPrevious.className = "blue";
+        conceptBtnPrevious.className = "gray";
         conceptBtnPrevious.innerHTML = "<";
-        conceptBtnPrevious.style.padding = "8px";
         conceptBtnPrevious.style.marginTop = "-6px";
-        conceptBtnPrevious.style.minWidth = "50px";
+        conceptBtnPrevious.style.minWidth = "80px";
         conceptBtnPrevious.style.marginRight = "20px";
         conceptBtnPrevious.style.fontWeight = "bold";
         conceptBtnPrevious.style.cursor = "pointer";
+        conceptBtnPrevious.style.minHeight = "30px";
         conceptBtnPrevious.setAttribute("disabled", true);
 
         conceptBtnPrevious.onclick = function() {
@@ -353,7 +529,7 @@ var concept = ({
         conceptPanel.id = "concept.panel";
         conceptPanel.style.width = "200px";
         conceptPanel.style.padding = "8px";
-        conceptPanel.style.marginTop = "-6px";
+        conceptPanel.style.marginTop = "-8px";
         conceptPanel.style.minWidth = "50px";
         conceptPanel.style.marginRight = "20px";
         conceptPanel.style.textAlign = "center";
@@ -365,14 +541,14 @@ var concept = ({
         var conceptBtnNext = document.createElement("button");
         conceptBtnNext.id = "concept.btnNext";
         conceptBtnNext.style.width = "30px";
-        conceptBtnNext.className = "blue";
+        conceptBtnNext.className = "gray";
         conceptBtnNext.innerHTML = ">";
-        conceptBtnNext.style.padding = "8px";
         conceptBtnNext.style.marginTop = "-6px";
-        conceptBtnNext.style.minWidth = "50px";
+        conceptBtnNext.style.minWidth = "80px";
         conceptBtnNext.style.marginRight = "20px";
         conceptBtnNext.style.fontWeight = "bold";
         conceptBtnNext.style.cursor = "pointer";
+        conceptBtnNext.style.minHeight = "30px";
         conceptBtnNext.setAttribute("disabled", true);
 
         conceptBtnNext.onclick = function() {
@@ -392,14 +568,14 @@ var concept = ({
         var conceptBtnLast = document.createElement("button");
         conceptBtnLast.id = "concept.btnLast";
         conceptBtnLast.style.width = "30px";
-        conceptBtnLast.className = "blue";
+        conceptBtnLast.className = "gray";
         conceptBtnLast.innerHTML = ">|";
-        conceptBtnLast.style.padding = "8px";
         conceptBtnLast.style.marginTop = "-6px";
-        conceptBtnLast.style.minWidth = "50px";
+        conceptBtnLast.style.minWidth = "80px";
         conceptBtnLast.style.marginRight = "20px";
         conceptBtnLast.style.fontWeight = "bold";
         conceptBtnLast.style.cursor = "pointer";
+        conceptBtnLast.style.minHeight = "30px";
         conceptBtnLast.setAttribute("disabled", true);
 
         conceptBtnLast.onclick = function() {
