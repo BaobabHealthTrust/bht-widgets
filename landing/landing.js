@@ -19,7 +19,8 @@ Object.defineProperty(Date.prototype, "format", {
 
         if (format.match(/YYYY\-mm\-dd/)) {
 
-            result = date.getFullYear() + "-" + (parseInt(date.getMonth()) + 1) + "-" + landing.padZeros(date.getDate(), 2);
+            result = date.getFullYear() + "-" + landing.padZeros((parseInt(date.getMonth()) + 1), 2) + "-" +
+                landing.padZeros(date.getDate(), 2);
 
         } else if (format.match(/mmm\/d\/YYYY/)) {
 
