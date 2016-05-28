@@ -2,6 +2,78 @@
 
 var datePicker = ({
 
+    cellMap: {
+        0: {
+            row: 2,
+            col: 5
+        },
+        1: {
+            row: 2,
+            col: 6
+        },
+        2: {
+            row: 3,
+            col: 5
+        },
+        3: {
+            row: 3,
+            col: 6
+        },
+        4: {
+            row: 4,
+            col: 5
+        },
+        5: {
+            row: 4,
+            col: 6
+        },
+        6: {
+            row: 5,
+            col: 5
+        },
+        7: {
+            row: 5,
+            col: 6
+        },
+        8: {
+            row: 6,
+            col: 5
+        },
+        9: {
+            row: 6,
+            col: 6
+        },
+        10: {
+            row: 7,
+            col: 5
+        },
+        11: {
+            row: 7,
+            col: 6
+        }
+    },
+
+    months: {
+        "January": 0,
+        "February": 1,
+        "March": 2,
+        "April": 3,
+        "May": 4,
+        "June": 5,
+        "July": 6,
+        "August": 7,
+        "September": 8,
+        "October": 9,
+        "November": 10,
+        "December": 11
+    },
+
+    ruleGroups: {
+        "text1-1": {
+            1: [2]
+        }
+    },
+
     $: function (id) {
 
         return document.getElementById(id);
@@ -53,6 +125,13 @@ var datePicker = ({
 
         var target = ([5, 6].indexOf(pos) >= 0 ? 5 : ([8, 9].indexOf(pos) >= 0 ? (pos - 1) : pos));
 
+        var month =
+            (datePicker.$("text1-5").value.trim().length > 0 ? datePicker.months[datePicker.$("text1-5").value.trim()] : -1);
+
+        var date =
+            (parseInt((datePicker.$("text1-7").value.trim().length > 0 ? datePicker.$("text1-7").value : 0)) * 10) +
+            (parseInt((datePicker.$("text1-8").value.trim().length > 0 ? datePicker.$("text1-8").value : 0)));
+
         var ruleGroups = {
             "text1-1": {
                 1: [2, 4, 11]
@@ -65,7 +144,7 @@ var datePicker = ({
             },
             "text1-5": {
                 5: [2, 3, 4, 5, 6, 7],
-                6: [2, 3, 4, 5, 6, 7]
+                    6: [2, 3, 4, 5, 6, 7]
             },
             "text1-7": {
                 8: [2, 3, 4, 5]
@@ -75,29 +154,41 @@ var datePicker = ({
             }
         };
 
-        var months = {
-            "January": 0,
-            "February": 1,
-            "March": 2,
-            "April": 3,
-            "May": 4,
-            "June": 5,
-            "July": 6,
-            "August": 7,
-            "September": 8,
-            "October": 9,
-            "November": 10,
-            "December": 11
-        };
-
-        var month =
-            (datePicker.$("text1-5").value.trim().length > 0 ? months[datePicker.$("text1-5").value.trim()] : -1);
-
-        var date =
-            (parseInt((datePicker.$("text1-7").value.trim().length > 0 ? datePicker.$("text1-7").value : 0)) * 10) +
-            (parseInt((datePicker.$("text1-8").value.trim().length > 0 ? datePicker.$("text1-8").value : 0)));
-
         var texts = ["text1-1", "text1-2", "text1-3", "text1-5", "text1-7", "text1-8"];
+
+        if(target > 2) {
+
+            if(datePicker.$("btn12-2")) {
+
+                datePicker.$("btn12-2").className = "blue";
+
+            }
+
+        } else {
+
+            if(datePicker.$("btn12-2")) {
+
+                datePicker.$("btn12-2").className = "gray";
+
+            }
+        }
+
+        if(target > 4) {
+
+            if(datePicker.$("btn12-4")) {
+
+                datePicker.$("btn12-4").className = "blue";
+
+            }
+
+        } else {
+
+            if(datePicker.$("btn12-4")) {
+
+                datePicker.$("btn12-4").className = "gray";
+
+            }
+        }
 
         if (datePicker.$("text1-" + target).value.trim().length <= 0) {
 
@@ -395,6 +486,10 @@ var datePicker = ({
 
                     max = (monthMaxes[month] % 10);
 
+                } else if ((Math.floor(date / 10) == Math.floor(monthMaxes[month] / 10)) && date > monthMaxes[month]) {
+
+                    max = (monthMaxes[month] % 10);
+
                 } else {
 
                     max = 11;
@@ -474,60 +569,9 @@ var datePicker = ({
 
         }
 
-        var cellMap = {
-            0: {
-                row: 2,
-                col: 5
-            },
-            1: {
-                row: 2,
-                col: 6
-            },
-            2: {
-                row: 3,
-                col: 5
-            },
-            3: {
-                row: 3,
-                col: 6
-            },
-            4: {
-                row: 4,
-                col: 5
-            },
-            5: {
-                row: 4,
-                col: 6
-            },
-            6: {
-                row: 5,
-                col: 5
-            },
-            7: {
-                row: 5,
-                col: 6
-            },
-            8: {
-                row: 6,
-                col: 5
-            },
-            9: {
-                row: 6,
-                col: 6
-            },
-            10: {
-                row: 7,
-                col: 5
-            },
-            11: {
-                row: 7,
-                col: 6
-            }
-        }
-
         var month = __date.getMonth();
 
-        var cell = cellMap[month];
+        var cell = datePicker.cellMap[month];
 
         if (datePicker.$("btn" + cell.row + "-" + cell.col)) {
 
@@ -552,6 +596,12 @@ var datePicker = ({
             datePicker.$("btn" + cell + "-9").click();
 
         }
+
+    },
+
+    buildAgeEstimator: function() {
+
+
 
     },
 
@@ -712,7 +762,7 @@ var datePicker = ({
         div.style.height = "100%";
         div.style.border = "2px inset #ccc";
         div.style.borderRadius = "20px";
-        div.style.backgroundColor = "#eee";
+        div.style.backgroundColor = "#fff";
         div.style.MozUserSelect = "none";
 
         if (this.target) {
@@ -726,7 +776,7 @@ var datePicker = ({
         table.border = 0;
         table.style.borderCollapse = "collapse";
         table.style.margin = "auto";
-        table.style.marginTop = "20px";
+        table.style.marginTop = "10px";
         table.cellPadding = 0;
 
         div.appendChild(table);
@@ -869,6 +919,13 @@ var datePicker = ({
                 ["&nbsp;", 1],
                 ["9", 1, undefined, 'gray button', true],
                 ["9", 1, undefined, 'blue button', true]
+            ],
+            [
+                ["Unknown", 4, "width: 200px; height: 30px; text-align: center; font-size: 24px; margin: auto;", 'blue button', true],
+                ["&nbsp;", 1],
+                ["Unknown", 2, "width: 200px; height: 30px; text-align: center; font-size: 24px; margin: auto;", 'gray button', true],
+                ["&nbsp;", 1],
+                ["Unknown", 2, "width: 200px; height: 30px; text-align: center; font-size: 24px; margin: auto;", 'gray button', true]
             ]
         ]
 
@@ -884,6 +941,12 @@ var datePicker = ({
                 td.id = i + "-" + j;
                 td.colSpan = grid[i][j][1];
 
+                if (i == 12) {
+
+                    td.align = "center";
+
+                }
+
                 if (grid[i][j][4] != undefined) {
 
                     var btn = document.createElement("button");
@@ -891,7 +954,13 @@ var datePicker = ({
                     btn.id = "btn" + i + "-" + j;
                     btn.innerHTML = grid[i][j][0];
 
-                    if (grid[i][j][0].trim().length > 1) {
+
+                    if (i == 12) {
+
+                        btn.style.minWidth = "120px";
+                        btn.style.minHeight = "50px";
+
+                    } else if (grid[i][j][0].trim().length > 1) {
 
                         btn.style.minWidth = "160px";
                         btn.style.minHeight = "50px";
@@ -910,46 +979,198 @@ var datePicker = ({
 
                         var col = parseInt(this.id.match(/(\d)$/)[1]);
 
-                        switch (col) {
+                        var row = parseInt(this.id.match(/(\d+)\-\d$/)[1]);
 
-                            case 0:
-                            case 1:
-                            case 2:
-                            case 3:
+                        if (row == 12) {
 
-                                if (datePicker.$("text1-" + col)) {
+                            if(col == 2) {
 
-                                    datePicker.$("text1-" + col).value = parseInt(this.innerHTML);
+                                if(datePicker.$("text1-3")){
 
-                                }
+                                    var digit = parseInt(datePicker.$("text1-3").value);
 
-                                break;
-                            case 5:
-                            case 6:
+                                    if (datePicker.$("btn" + (2 + digit) + "-" + 3)) {
 
-                                if (datePicker.$("text1-5")) {
+                                        datePicker.$("btn" + (2 + digit) + "-" + 3).click();
 
-                                    datePicker.$("text1-5").value = this.innerHTML.trim();
+                                    }
 
                                 }
 
-                                break;
-                            case 8:
-                            case 9:
+                                if(datePicker.$("text1-5")){
 
-                                if (datePicker.$("text1-" + (col - 1))) {
-
-                                    datePicker.$("text1-" + (col - 1)).value = parseInt(this.innerHTML);
+                                    datePicker.$("text1-5").value = "?";
 
                                 }
 
-                                break;
+                                if(datePicker.$("text1-7")){
+
+                                    datePicker.$("text1-7").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-8")){
+
+                                    datePicker.$("text1-8").value = "?";
+
+                                }
+
+                                if(datePicker.$("btn12-4")) {
+
+                                    datePicker.$("btn12-4").className = "gray";
+
+                                }
+
+                            } else if(col == 4) {
+
+                                if(datePicker.$("text1-5")){
+
+                                    var month =
+                                        (datePicker.$("text1-5").value.trim().length > 0 ? datePicker.months[datePicker.$("text1-5").value.trim()] : -1);
+
+                                    var cell = datePicker.cellMap[month];
+
+                                    if (datePicker.$("btn" + cell.row + "-" + cell.col)) {
+
+                                        datePicker.$("btn" + cell.row + "-" + cell.col).click();
+
+                                    }
+
+
+                                }
+
+                                if(datePicker.$("text1-7")){
+
+                                    datePicker.$("text1-7").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-8")){
+
+                                    datePicker.$("text1-8").value = "?";
+
+                                }
+
+                            }  else if(col == 0) {
+
+                                if(datePicker.$("text1-0")){
+
+                                    var digit = (Math.floor((new Date()).getFullYear() / 1000));
+
+                                    if (datePicker.$("btn" + (2 + digit) + "-" + 0)) {
+
+                                        datePicker.$("btn" + (2 + digit) + "-" + 0).click();
+
+                                    }
+
+                                }
+
+                                if(datePicker.$("text1-0")){
+
+                                    datePicker.$("text1-0").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-1")){
+
+                                    datePicker.$("text1-1").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-2")){
+
+                                    datePicker.$("text1-2").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-3")){
+
+                                    datePicker.$("text1-3").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-5")){
+
+                                    datePicker.$("text1-5").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-7")){
+
+                                    datePicker.$("text1-7").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-8")){
+
+                                    datePicker.$("text1-8").value = "?";
+
+                                }
+
+                                if(datePicker.$("text1-0").value.trim() == "?") {
+
+                                    for (var r = 0; r < datePicker.ruleGroups["text1-1"][1].length; r++) {
+
+                                        var row = datePicker.ruleGroups["text1-1"][1][r];
+
+                                        if (datePicker.$("btn" + row + "-" + 1)) {
+
+                                            datePicker.$("btn" + row + "-" + 1).className = "gray";
+
+                                        }
+
+                                    }
+
+                                }
+
+                                datePicker.buildAgeEstimator();
+
+                            }
+
+                        } else {
+
+                            switch (col) {
+
+                                case 0:
+                                case 1:
+                                case 2:
+                                case 3:
+
+                                    if (datePicker.$("text1-" + col)) {
+
+                                        datePicker.$("text1-" + col).value = parseInt(this.innerHTML);
+
+                                    }
+
+                                    break;
+                                case 5:
+                                case 6:
+
+                                    if (datePicker.$("text1-5")) {
+
+                                        datePicker.$("text1-5").value = this.innerHTML.trim();
+
+                                    }
+
+                                    break;
+                                case 8:
+                                case 9:
+
+                                    if (datePicker.$("text1-" + (col - 1))) {
+
+                                        datePicker.$("text1-" + (col - 1)).value = parseInt(this.innerHTML);
+
+                                    }
+
+                                    break;
+
+                            }
+
+                            var pos = parseInt(this.id.match(/(\d)$/)[1]);
+
+                            datePicker.checkDate(pos);
 
                         }
-
-                        var pos = parseInt(this.id.match(/(\d)$/)[1]);
-
-                        datePicker.checkDate(pos);
 
                     }
 
@@ -998,15 +1219,31 @@ var datePicker = ({
 
         this.checkDate(0);
 
+        if (this.seedDate) {
+
+            var __date = (new Date(this.seedDate));
+
+            if (!isNaN(__date)) {
+
+                datePicker.loadDate(__date);
+
+            }
+
+        }
+
     },
 
-    init: function (target, maxDate, minDate) {
+    init: function (target, seedDate, estimate, maxDate, minDate) {
 
         this.target = target;
 
         this.maxDate = maxDate;
 
         this.minDate = minDate;
+
+        this.seedDate = seedDate;
+
+        this.estimate = estimate;
 
         this.buildControl();
 
