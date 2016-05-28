@@ -74,20 +74,35 @@ var datePicker = ({
         }
     },
 
+    currentDate: null,
+
     $: function (id) {
 
         return document.getElementById(id);
 
     },
 
-    sheet: function () {
+    padZeros: function (number, positions) {
+        var zeros = parseInt(positions) - String(number).length;
+        var padded = "";
+
+        for (var i = 0; i < zeros; i++) {
+            padded += "0";
+        }
+
+        padded += String(number);
+
+        return padded;
+    },
+
+    sheet: function (parent) {
         // Create the <style> tag
         var style = document.createElement("style");
 
         style.appendChild(document.createTextNode(""));
 
         // Add the <style> element to the page
-        document.head.appendChild(style);
+        parent.appendChild(style);
 
         return style.sheet;
     },
@@ -121,16 +136,16 @@ var datePicker = ({
             (parseInt((datePicker.$("text1-2").value.trim().length > 0 ? datePicker.$("text1-2").value : 0)) * 10) +
             (parseInt((datePicker.$("text1-3").value.trim().length > 0 ? datePicker.$("text1-3").value : 0)));
 
-        var currentDate = "";
-
-        var target = ([5, 6].indexOf(pos) >= 0 ? 5 : ([8, 9].indexOf(pos) >= 0 ? (pos - 1) : pos));
-
         var month =
             (datePicker.$("text1-5").value.trim().length > 0 ? datePicker.months[datePicker.$("text1-5").value.trim()] : -1);
 
         var date =
             (parseInt((datePicker.$("text1-7").value.trim().length > 0 ? datePicker.$("text1-7").value : 0)) * 10) +
             (parseInt((datePicker.$("text1-8").value.trim().length > 0 ? datePicker.$("text1-8").value : 0)));
+
+        datePicker.currentDate = year + "-" + (datePicker.padZeros((month + 1), 2)) + "-" + (datePicker.padZeros(date, 2));
+
+        var target = ([5, 6].indexOf(pos) >= 0 ? 5 : ([8, 9].indexOf(pos) >= 0 ? (pos - 1) : pos));
 
         var ruleGroups = {
             "text1-1": {
@@ -144,7 +159,7 @@ var datePicker = ({
             },
             "text1-5": {
                 5: [2, 3, 4, 5, 6, 7],
-                    6: [2, 3, 4, 5, 6, 7]
+                6: [2, 3, 4, 5, 6, 7]
             },
             "text1-7": {
                 8: [2, 3, 4, 5]
@@ -156,9 +171,9 @@ var datePicker = ({
 
         var texts = ["text1-1", "text1-2", "text1-3", "text1-5", "text1-7", "text1-8"];
 
-        if(target > 2) {
+        if (target > 2) {
 
-            if(datePicker.$("btn12-2")) {
+            if (datePicker.$("btn12-2")) {
 
                 datePicker.$("btn12-2").className = "blue";
 
@@ -166,16 +181,17 @@ var datePicker = ({
 
         } else {
 
-            if(datePicker.$("btn12-2")) {
+            if (datePicker.$("btn12-2")) {
 
                 datePicker.$("btn12-2").className = "gray";
 
             }
+
         }
 
-        if(target > 4) {
+        if (target > 4) {
 
-            if(datePicker.$("btn12-4")) {
+            if (datePicker.$("btn12-4")) {
 
                 datePicker.$("btn12-4").className = "blue";
 
@@ -183,11 +199,12 @@ var datePicker = ({
 
         } else {
 
-            if(datePicker.$("btn12-4")) {
+            if (datePicker.$("btn12-4")) {
 
                 datePicker.$("btn12-4").className = "gray";
 
             }
+
         }
 
         if (datePicker.$("text1-" + target).value.trim().length <= 0) {
@@ -571,43 +588,265 @@ var datePicker = ({
 
         var month = __date.getMonth();
 
-        var cell = datePicker.cellMap[month];
-
-        if (datePicker.$("btn" + cell.row + "-" + cell.col)) {
-
-            datePicker.$("btn" + cell.row + "-" + cell.col).click();
-
-        }
-
         var dat = __date.getDate();
 
-        var row = (dat > 9 ? Math.floor(dat / 10) : 0) + 2;
+        if (parseInt(datePicker.estimate.value.trim()) == 1 && month == 6 && dat == 10) {
 
-        var cell = Math.floor(dat % 10) + 2;
+            if (datePicker.$("text1-5")) {
 
-        if (datePicker.$("btn" + row + "-8")) {
+                datePicker.$("text1-5").value = "?";
 
-            datePicker.$("btn" + row + "-8").click();
+            }
+
+            if (datePicker.$("text1-7")) {
+
+                datePicker.$("text1-7").value = "?";
+
+            }
+
+            if (datePicker.$("text1-8")) {
+
+                datePicker.$("text1-8").value = "?";
+
+            }
+
+            return;
+
+        } else {
+
+            var cell = datePicker.cellMap[month];
+
+            if (datePicker.$("btn" + cell.row + "-" + cell.col)) {
+
+                datePicker.$("btn" + cell.row + "-" + cell.col).click();
+
+            }
 
         }
 
-        if (datePicker.$("btn" + cell + "-9")) {
+        if (parseInt(datePicker.estimate.value.trim()) == 1 && dat == 5) {
 
-            datePicker.$("btn" + cell + "-9").click();
+            if (datePicker.$("text1-7")) {
+
+                datePicker.$("text1-7").value = "?";
+
+            }
+
+            if (datePicker.$("text1-8")) {
+
+                datePicker.$("text1-8").value = "?";
+
+            }
+
+        } else {
+
+            var row = (dat > 9 ? Math.floor(dat / 10) : 0) + 2;
+
+            var cell = Math.floor(dat % 10) + 2;
+
+            if (datePicker.$("btn" + row + "-8")) {
+
+                datePicker.$("btn" + row + "-8").click();
+
+            }
+
+            if (datePicker.$("btn" + cell + "-9")) {
+
+                datePicker.$("btn" + cell + "-9").click();
+
+            }
 
         }
 
     },
 
-    buildAgeEstimator: function() {
+    buildAgeEstimator: function () {
 
+        if (datePicker.$("date.picker.div")) {
 
+            datePicker.$("date.picker.div").innerHTML = "";
+
+        }
+
+        var table = document.createElement("table");
+        table.style.margin = "auto";
+        table.style.marginTop = "20px";
+        table.border = 0;
+
+        datePicker.$("date.picker.div").appendChild(table);
+
+        var grid = [
+            [
+                ["Age Estimate", 3, "font-weight: normal; font-size: 30px; padding: 8px;"]
+            ],
+            [
+                [undefined, 3, "width: 210px; height: 30px; text-align: center; font-size: 24px", undefined, undefined, true]
+            ],
+            [
+                ["7", 1, undefined, 'blue button', true],
+                ["8", 1, undefined, 'blue button', true],
+                ["9", 1, undefined, 'blue button', true]
+            ],
+            [
+                ["4", 1, undefined, 'blue button', true],
+                ["5", 1, undefined, 'blue button', true],
+                ["6", 1, undefined, 'blue button', true]
+            ],
+            [
+                ["1", 1, undefined, 'blue button', true],
+                ["2", 1, undefined, 'blue button', true],
+                ["3", 1, undefined, 'blue button', true]
+            ],
+            [
+                ["0", 1, undefined, 'gray button', true],
+                ["del", 2, "width: 140px;", 'gray button', true]
+            ]
+        ];
+
+        for (var i = 0; i < grid.length; i++) {
+
+            var tr = document.createElement("tr");
+
+            table.appendChild(tr);
+
+            for (var j = 0; j < grid[i].length; j++) {
+
+                var td = document.createElement("td");
+                td.align = "center";
+
+                tr.appendChild(td);
+
+                td.id = i + "-" + j;
+                td.colSpan = grid[i][j][1];
+
+                if (grid[i][j][5]) {
+
+                    var input = document.createElement("input");
+                    input.type = "text";
+                    input.id = "text" + i + "-" + j;
+
+                    if (grid[i][j][2]) {
+
+                        input.setAttribute("style", grid[i][j][2]);
+
+                    }
+
+                    td.appendChild(input);
+
+                } else if (grid[i][j][4] != undefined) {
+
+                    var btn = document.createElement("button");
+                    btn.className = grid[i][j][3];
+                    btn.id = "btn" + i + "-" + j;
+                    btn.innerHTML = grid[i][j][0];
+                    btn.style.minWidth = "60px";
+                    btn.style.minHeight = "50px";
+
+                    if (grid[i][j][2]) {
+
+                        btn.setAttribute("style", grid[i][j][2]);
+
+                    }
+
+                    td.appendChild(btn);
+
+                    btn.onclick = function () {
+
+                        if (this.className.match(/gray/))
+                            return;
+
+                        if (this.innerHTML.trim() == "del") {
+
+                            if (datePicker.$("text1-0")) {
+
+                                datePicker.$("text1-0").value = datePicker.$("text1-0").value.trim().substring(0,
+                                        datePicker.$("text1-0").value.trim().length - 1);
+
+                            }
+
+                        } else {
+
+                            if (datePicker.$("text1-0")) {
+
+                                datePicker.$("text1-0").value += this.innerHTML.trim();
+
+                            }
+
+                        }
+
+                        if (datePicker.$("text1-0") && datePicker.$("text1-0").value.trim().length <= 0) {
+
+                            if(datePicker.$("btn5-0")) {
+
+                                datePicker.$("btn5-0").className = "gray";
+
+                            }
+
+                            if(datePicker.$("btn5-1")) {
+
+                                datePicker.$("btn5-1").className = "gray";
+
+                            }
+
+                        } else {
+
+                            if(datePicker.$("btn5-0")) {
+
+                                datePicker.$("btn5-0").className = "blue";
+
+                            }
+
+                            if(datePicker.$("btn5-1")) {
+
+                                datePicker.$("btn5-1").className = "blue";
+
+                            }
+
+                            var date = ((new Date()).getFullYear() - parseInt(datePicker.$("text1-0").value.trim())) +
+                                "-07-15";
+
+                            if(datePicker.seedDate) {
+
+                                datePicker.seedDate.value = date;
+
+                            }
+
+                            if(datePicker.estimate) {
+
+                                datePicker.estimate = 1;
+
+                            }
+
+                        }
+
+                    }
+
+                } else if (grid[i][j][0]) {
+
+                    td.innerHTML = grid[i][j][0];
+
+                    if (grid[i][j][2]) {
+
+                        td.setAttribute("style", grid[i][j][2]);
+
+                    }
+
+                }
+
+            }
+        }
 
     },
 
     buildControl: function () {
 
-        var style = this.sheet();
+        if (this.target) {
+
+            this.target.innerHTML = "";
+
+        }
+
+        var style = this.sheet(this.target);
         this.addCSSRule(style, ".headTab", "width: 100%");
         this.addCSSRule(style, ".headTab", "box-shadow: 5px 2px 5px 0px rgba(0,0,0,0.75)");
         this.addCSSRule(style, ".headTab", "overflow: hidden");
@@ -764,6 +1003,8 @@ var datePicker = ({
         div.style.borderRadius = "20px";
         div.style.backgroundColor = "#fff";
         div.style.MozUserSelect = "none";
+        div.style.font = "28px 'Nimbus Sans L', 'Arial Narrow', sans-serif";
+        div.style.color = "#3e649d";
 
         if (this.target) {
 
@@ -772,22 +1013,21 @@ var datePicker = ({
         }
 
         var table = document.createElement("table");
-        // table.width = "95%";
         table.border = 0;
         table.style.borderCollapse = "collapse";
         table.style.margin = "auto";
-        table.style.marginTop = "10px";
+        table.style.marginTop = "5px";
         table.cellPadding = 0;
 
         div.appendChild(table);
 
         var grid = [
             [
-                ["Year", 4, "font-weight: bold;"],
+                ["Year", 4, "font-weight: normal; font-size: 32px;"],
                 ["&nbsp;", 1],
-                ["Month", 2, "font-weight: bold;"],
+                ["Month", 2, "font-weight: normal; font-size: 32px;"],
                 ["&nbsp;", 1],
-                ["Date", 2, "font-weight: bold;"]
+                ["Date", 2, "font-weight: normal; font-size: 32px;"]
             ],
             [
                 ["&nbsp;", 1, "width: 50px; height: 30px; text-align: center; font-size: 24px", undefined, undefined, true],
@@ -983,9 +1223,9 @@ var datePicker = ({
 
                         if (row == 12) {
 
-                            if(col == 2) {
+                            if (col == 2) {
 
-                                if(datePicker.$("text1-3")){
+                                if (datePicker.$("text1-3")) {
 
                                     var digit = parseInt(datePicker.$("text1-3").value);
 
@@ -997,33 +1237,47 @@ var datePicker = ({
 
                                 }
 
-                                if(datePicker.$("text1-5")){
+                                if (datePicker.$("text1-5")) {
 
                                     datePicker.$("text1-5").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-7")){
+                                if (datePicker.$("text1-7")) {
 
                                     datePicker.$("text1-7").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-8")){
+                                if (datePicker.$("text1-8")) {
 
                                     datePicker.$("text1-8").value = "?";
 
                                 }
 
-                                if(datePicker.$("btn12-4")) {
+                                if (datePicker.estimate) {
+
+                                    datePicker.estimate.value = 1;
+
+                                }
+
+                                if (datePicker.seedDate) {
+
+                                    datePicker.seedDate.value = (datePicker.$("text1-0").value.trim() +
+                                        datePicker.$("text1-1").value.trim() + datePicker.$("text1-2").value.trim() +
+                                        datePicker.$("text1-3").value.trim()) + "-07-10";
+
+                                }
+
+                                if (datePicker.$("btn12-4")) {
 
                                     datePicker.$("btn12-4").className = "gray";
 
                                 }
 
-                            } else if(col == 4) {
+                            } else if (col == 4) {
 
-                                if(datePicker.$("text1-5")){
+                                if (datePicker.$("text1-5")) {
 
                                     var month =
                                         (datePicker.$("text1-5").value.trim().length > 0 ? datePicker.months[datePicker.$("text1-5").value.trim()] : -1);
@@ -1039,21 +1293,36 @@ var datePicker = ({
 
                                 }
 
-                                if(datePicker.$("text1-7")){
+                                if (datePicker.$("text1-7")) {
 
                                     datePicker.$("text1-7").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-8")){
+                                if (datePicker.$("text1-8")) {
 
                                     datePicker.$("text1-8").value = "?";
 
                                 }
 
-                            }  else if(col == 0) {
+                                if (datePicker.estimate) {
 
-                                if(datePicker.$("text1-0")){
+                                    datePicker.estimate.value = 1;
+
+                                }
+
+                                if (datePicker.seedDate) {
+
+                                    datePicker.seedDate.value = (datePicker.$("text1-0").value.trim() +
+                                        datePicker.$("text1-1").value.trim() + datePicker.$("text1-2").value.trim() +
+                                        datePicker.$("text1-3").value.trim()) + "-" + datePicker.padZeros(
+                                        (parseInt(datePicker.months[datePicker.$("text1-5").value.trim()]) + 1), 2) + "-05";
+
+                                }
+
+                            } else if (col == 0) {
+
+                                if (datePicker.$("text1-0")) {
 
                                     var digit = (Math.floor((new Date()).getFullYear() / 1000));
 
@@ -1065,49 +1334,55 @@ var datePicker = ({
 
                                 }
 
-                                if(datePicker.$("text1-0")){
+                                if (datePicker.$("text1-0")) {
 
                                     datePicker.$("text1-0").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-1")){
+                                if (datePicker.$("text1-1")) {
 
                                     datePicker.$("text1-1").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-2")){
+                                if (datePicker.$("text1-2")) {
 
                                     datePicker.$("text1-2").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-3")){
+                                if (datePicker.$("text1-3")) {
 
                                     datePicker.$("text1-3").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-5")){
+                                if (datePicker.$("text1-5")) {
 
                                     datePicker.$("text1-5").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-7")){
+                                if (datePicker.$("text1-7")) {
 
                                     datePicker.$("text1-7").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-8")){
+                                if (datePicker.$("text1-8")) {
 
                                     datePicker.$("text1-8").value = "?";
 
                                 }
 
-                                if(datePicker.$("text1-0").value.trim() == "?") {
+                                if (datePicker.estimate) {
+
+                                    datePicker.estimate.value = 1;
+
+                                }
+
+                                if (datePicker.$("text1-0").value.trim() == "?") {
 
                                     for (var r = 0; r < datePicker.ruleGroups["text1-1"][1].length; r++) {
 
@@ -1159,6 +1434,33 @@ var datePicker = ({
                                     if (datePicker.$("text1-" + (col - 1))) {
 
                                         datePicker.$("text1-" + (col - 1)).value = parseInt(this.innerHTML);
+
+                                    }
+
+                                    if (datePicker.estimate) {
+
+                                        datePicker.estimate.value = 0;
+
+                                    }
+
+                                    if (datePicker.seedDate) {
+
+                                        var year =
+                                            (parseInt((datePicker.$("text1-0").value.trim().length > 0 ? datePicker.$("text1-0").value : 0)) * 1000) +
+                                            (parseInt((datePicker.$("text1-1").value.trim().length > 0 ? datePicker.$("text1-1").value : 0)) * 100) +
+                                            (parseInt((datePicker.$("text1-2").value.trim().length > 0 ? datePicker.$("text1-2").value : 0)) * 10) +
+                                            (parseInt((datePicker.$("text1-3").value.trim().length > 0 ? datePicker.$("text1-3").value : 0)));
+
+                                        var month =
+                                            (datePicker.$("text1-5").value.trim().length > 0 ? datePicker.months[datePicker.$("text1-5").value.trim()] : -1);
+
+                                        var date =
+                                            (parseInt((datePicker.$("text1-7").value.trim().length > 0 ? datePicker.$("text1-7").value : 0)) * 10) +
+                                            (parseInt((datePicker.$("text1-8").value.trim().length > 0 ? datePicker.$("text1-8").value : 0)));
+
+                                        datePicker.currentDate = year + "-" + (datePicker.padZeros((month + 1), 2)) + "-" + (datePicker.padZeros(date, 2));
+
+                                        datePicker.seedDate.value = datePicker.currentDate;
 
                                     }
 
@@ -1221,7 +1523,7 @@ var datePicker = ({
 
         if (this.seedDate) {
 
-            var __date = (new Date(this.seedDate));
+            var __date = (new Date(this.seedDate.value.trim()));
 
             if (!isNaN(__date)) {
 

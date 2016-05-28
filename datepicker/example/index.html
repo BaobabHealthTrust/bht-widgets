@@ -6,17 +6,47 @@
     <script src="../datepicker.js"></script>
 </head>
 <body>
-<div style="height: 700px; border: 1px solid #999; border-radius: 20px; margin: 10px; background-color: #eee;
+<div style="height: 720px; border: 1px solid #999; border-radius: 20px; margin: 10px; background-color: #eee;
         padding: 10px; overflow: auto; "  id="divMain">
 </div>
+<table style="margin: auto;">
+    <tr>
+        <td>
+            Date:
+        </td>
+        <td>
+            <input type="text" id="date" value="1975-04-19" />
+        </td>
+        <td>
+            Date estimate:
+        </td>
+        <td>
+            <input type="text" id="estimated" value="0" />
+        </td>
+        <td>
+            <button onclick="init()" style="min-height: 20px;" class="blue">
+                Refresh
+            </button>
+        </td>
+    </tr>
+</table>
 <script>
 
-    // Maximum date: yesterday
-    // Minimum date: 100 days ago
-    datePicker.init(document.getElementById("divMain"), "1975-04-19", false,
-            (new Date((new Date()).setDate((new Date()).getDate() - 1))),
-            (new Date((new Date()).setDate((new Date()).getDate() - 100)))
-    );
+    function init() {
+
+        // Maximum date: yesterday
+        // Minimum date: 100 days ago
+        datePicker.init(
+                document.getElementById("divMain"),                                 // Target control container
+                document.getElementById("date"),                                    // Target date input control
+                document.getElementById("estimated"),                               // Target indicator if date an estimate
+                (new Date((new Date()).setDate((new Date()).getDate() - 1))),       // Maximum allowed date
+                (new Date((new Date()).setDate((new Date()).getDate() - 100)))      /// Minimum allowed date TODO: Yet to be tackled
+        );
+
+    }
+
+    init();
 
 </script>
 </body>
